@@ -19,6 +19,16 @@ export function BeautyDesigns() {
     fuchsia: { bg: 'bg-fuchsia-500', text: 'text-fuchsia-600', bgLight: 'bg-fuchsia-50', ring: 'ring-fuchsia-200' },
     amber: { bg: 'bg-amber-600', text: 'text-amber-700', bgLight: 'bg-amber-50', ring: 'ring-amber-200' },
     violet: { bg: 'bg-violet-500', text: 'text-violet-600', bgLight: 'bg-violet-50', ring: 'ring-violet-200' },
+    ivory: { bg: 'bg-stone-800', text: 'text-stone-700', bgLight: 'bg-stone-50', ring: 'ring-stone-200' },
+    carbon: { bg: 'bg-zinc-900', text: 'text-zinc-600', bgLight: 'bg-zinc-100', ring: 'ring-zinc-300' },
+    ocean: { bg: 'bg-blue-600', text: 'text-blue-600', bgLight: 'bg-blue-50', ring: 'ring-blue-200' },
+    sage: { bg: 'bg-emerald-700', text: 'text-emerald-700', bgLight: 'bg-emerald-50', ring: 'ring-emerald-200' },
+    copper: { bg: 'bg-orange-700', text: 'text-orange-700', bgLight: 'bg-orange-50', ring: 'ring-orange-200' },
+    slate: { bg: 'bg-slate-700', text: 'text-slate-700', bgLight: 'bg-slate-50', ring: 'ring-slate-200' },
+    coral: { bg: 'bg-rose-500', text: 'text-rose-600', bgLight: 'bg-rose-50', ring: 'ring-rose-200' },
+    midnight: { bg: 'bg-indigo-900', text: 'text-indigo-600', bgLight: 'bg-indigo-50', ring: 'ring-indigo-200' },
+    forest: { bg: 'bg-green-800', text: 'text-green-700', bgLight: 'bg-green-50', ring: 'ring-green-200' },
+    sand: { bg: 'bg-yellow-700', text: 'text-yellow-700', bgLight: 'bg-yellow-50', ring: 'ring-yellow-200' },
   };
 
   const accent = themeAccentClasses[design.themeColor];
@@ -30,7 +40,7 @@ export function BeautyDesigns() {
         <div className="section-padding mx-auto max-w-7xl">
           <div className={`mb-10 text-center lg:mb-14 ${inView ? 'in-view' : ''} reveal`}>
             <p className={`mb-2 text-sm font-semibold uppercase tracking-wider ${accent.text}`}>
-              5 премиальных дизайнов для бьюти-сфер
+              15 премиальных дизайнов для любого бизнеса
             </p>
             <h2 className="text-balance text-3xl font-bold text-ink-950 dark:text-white sm:text-4xl lg:text-5xl">
               Дизайны, которые продают красоту

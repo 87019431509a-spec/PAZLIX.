@@ -21,6 +21,7 @@ interface ThemeStyle {
   bg: string; text: string; bgLight: string; gradient: string; buttonHover: string;
   page: string; heroMask: string; logo: string; card: string; tabActive: string; tabIdle: string;
   heroOverlay: string; sectionGap: string; priceFont: string;
+  cardTitle: string; cardSub: string;
 }
 
 const themeStyles: Record<string, ThemeStyle> = {
@@ -33,6 +34,7 @@ const themeStyles: Record<string, ThemeStyle> = {
     tabActive: 'rounded-full bg-pink-500 text-white', tabIdle: 'rounded-full bg-pink-50 text-pink-500',
     heroOverlay: 'bg-gradient-to-b from-pink-500/20 to-pink-500/40 mix-blend-multiply',
     sectionGap: 'gap-4', priceFont: 'font-bold',
+    cardTitle: 'text-ink-900', cardSub: 'text-ink-500',
   },
   teal: {
     bg: 'bg-teal-600', text: 'text-teal-700', bgLight: 'bg-teal-50',
@@ -43,6 +45,7 @@ const themeStyles: Record<string, ThemeStyle> = {
     tabActive: 'rounded-none border-b-2 border-teal-600 text-teal-700 font-semibold', tabIdle: 'rounded-none border-b-2 border-transparent text-ink-400',
     heroOverlay: 'bg-gradient-to-b from-teal-600/25 to-teal-800/45 mix-blend-multiply',
     sectionGap: 'gap-3', priceFont: 'font-bold tracking-tight',
+    cardTitle: 'text-ink-900', cardSub: 'text-ink-500',
   },
   fuchsia: {
     bg: 'bg-fuchsia-600', text: 'text-fuchsia-600', bgLight: 'bg-fuchsia-50',
@@ -53,6 +56,7 @@ const themeStyles: Record<string, ThemeStyle> = {
     tabActive: 'rounded-none bg-fuchsia-600 text-white uppercase tracking-wider text-[10px]', tabIdle: 'rounded-none bg-fuchsia-100 text-fuchsia-500 uppercase tracking-wider text-[10px]',
     heroOverlay: 'bg-gradient-to-b from-fuchsia-600/20 to-fuchsia-800/40 mix-blend-multiply',
     sectionGap: 'gap-4', priceFont: 'font-black uppercase',
+    cardTitle: 'text-ink-900', cardSub: 'text-ink-500',
   },
   amber: {
     bg: 'bg-amber-700', text: 'text-amber-800', bgLight: 'bg-amber-50',
@@ -63,6 +67,7 @@ const themeStyles: Record<string, ThemeStyle> = {
     tabActive: 'rounded-lg bg-amber-700 text-white', tabIdle: 'rounded-lg bg-amber-50 text-amber-700',
     heroOverlay: 'bg-gradient-to-b from-amber-600/20 to-amber-800/35 mix-blend-multiply',
     sectionGap: 'gap-3', priceFont: 'font-bold',
+    cardTitle: 'text-ink-900', cardSub: 'text-ink-500',
   },
   violet: {
     bg: 'bg-violet-600', text: 'text-violet-700', bgLight: 'bg-violet-50',
@@ -73,6 +78,117 @@ const themeStyles: Record<string, ThemeStyle> = {
     tabActive: 'rounded-full bg-violet-600 text-white', tabIdle: 'rounded-full bg-violet-50 text-violet-500',
     heroOverlay: 'bg-gradient-to-b from-violet-500/20 to-violet-700/35 mix-blend-multiply',
     sectionGap: 'gap-5', priceFont: 'font-bold',
+    cardTitle: 'text-ink-900', cardSub: 'text-ink-500',
+  },
+  ivory: {
+    bg: 'bg-stone-800', text: 'text-stone-800', bgLight: 'bg-stone-50',
+    gradient: 'from-stone-600 to-stone-800', buttonHover: 'hover:bg-stone-900',
+    page: 'bg-[#faf8f5]', heroMask: 'rounded-b-xl',
+    logo: 'rounded-full bg-stone-100 text-stone-800 border border-stone-200',
+    card: 'rounded-2xl border border-stone-200 bg-white shadow-sm',
+    tabActive: 'rounded-full bg-stone-800 text-white', tabIdle: 'rounded-full bg-stone-100 text-stone-600',
+    heroOverlay: 'bg-gradient-to-b from-stone-800/10 to-stone-900/40 mix-blend-multiply',
+    sectionGap: 'gap-4', priceFont: 'font-semibold tracking-tight',
+    cardTitle: 'text-ink-900', cardSub: 'text-ink-500',
+  },
+  carbon: {
+    bg: 'bg-zinc-900', text: 'text-zinc-200', bgLight: 'bg-zinc-800',
+    gradient: 'from-zinc-700 to-zinc-900', buttonHover: 'hover:bg-zinc-800',
+    page: 'bg-zinc-950', heroMask: 'rounded-none',
+    logo: 'rounded-lg bg-zinc-800 text-white border border-zinc-700',
+    card: 'rounded-xl border border-zinc-800 bg-zinc-900 shadow-none',
+    tabActive: 'rounded-lg bg-white text-zinc-900 font-bold', tabIdle: 'rounded-lg bg-zinc-800 text-zinc-400',
+    heroOverlay: 'bg-gradient-to-b from-zinc-900/20 to-zinc-950/60',
+    sectionGap: 'gap-3', priceFont: 'font-bold',
+    cardTitle: 'text-white', cardSub: 'text-zinc-400',
+  },
+  ocean: {
+    bg: 'bg-blue-600', text: 'text-blue-700', bgLight: 'bg-blue-50',
+    gradient: 'from-blue-500 to-blue-700', buttonHover: 'hover:bg-blue-700',
+    page: 'bg-[#f0f5ff]', heroMask: 'rounded-b-3xl',
+    logo: 'rounded-2xl bg-blue-100 text-blue-700',
+    card: 'rounded-2xl border border-blue-100 bg-white shadow-[0_4px_20px_rgba(37,99,235,0.06)]',
+    tabActive: 'rounded-full bg-blue-600 text-white', tabIdle: 'rounded-full bg-blue-50 text-blue-600',
+    heroOverlay: 'bg-gradient-to-b from-blue-600/15 to-blue-800/40 mix-blend-multiply',
+    sectionGap: 'gap-4', priceFont: 'font-bold',
+    cardTitle: 'text-ink-900', cardSub: 'text-ink-500',
+  },
+  sage: {
+    bg: 'bg-emerald-700', text: 'text-emerald-800', bgLight: 'bg-emerald-50',
+    gradient: 'from-emerald-500 to-emerald-700', buttonHover: 'hover:bg-emerald-800',
+    page: 'bg-[#f2f7f4]', heroMask: 'rounded-b-[2rem]',
+    logo: 'rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200',
+    card: 'rounded-xl border border-emerald-100 bg-white shadow-sm',
+    tabActive: 'rounded-lg bg-emerald-700 text-white', tabIdle: 'rounded-lg bg-emerald-50 text-emerald-700',
+    heroOverlay: 'bg-gradient-to-b from-emerald-700/15 to-emerald-900/40 mix-blend-multiply',
+    sectionGap: 'gap-4', priceFont: 'font-semibold',
+    cardTitle: 'text-ink-900', cardSub: 'text-ink-500',
+  },
+  copper: {
+    bg: 'bg-orange-700', text: 'text-orange-800', bgLight: 'bg-orange-50',
+    gradient: 'from-orange-500 to-orange-700', buttonHover: 'hover:bg-orange-800',
+    page: 'bg-[#fdf6f0]', heroMask: 'rounded-b-2xl',
+    logo: 'rounded-xl bg-orange-100 text-orange-800 border border-orange-200',
+    card: 'rounded-2xl border border-orange-100 bg-white shadow-[0_4px_16px_rgba(194,65,12,0.05)]',
+    tabActive: 'rounded-full bg-orange-700 text-white', tabIdle: 'rounded-full bg-orange-50 text-orange-700',
+    heroOverlay: 'bg-gradient-to-b from-orange-600/15 to-orange-800/40 mix-blend-multiply',
+    sectionGap: 'gap-4', priceFont: 'font-bold',
+    cardTitle: 'text-ink-900', cardSub: 'text-ink-500',
+  },
+  slate: {
+    bg: 'bg-slate-700', text: 'text-slate-700', bgLight: 'bg-slate-50',
+    gradient: 'from-slate-500 to-slate-700', buttonHover: 'hover:bg-slate-800',
+    page: 'bg-[#f5f6f8]', heroMask: 'rounded-none',
+    logo: 'rounded-lg bg-slate-100 text-slate-700 border border-slate-200',
+    card: 'rounded-lg border border-slate-200 bg-white shadow-sm',
+    tabActive: 'rounded-none border-b-2 border-slate-700 text-slate-800 font-bold', tabIdle: 'rounded-none border-b-2 border-transparent text-slate-400',
+    heroOverlay: 'bg-gradient-to-b from-slate-700/15 to-slate-900/45 mix-blend-multiply',
+    sectionGap: 'gap-3', priceFont: 'font-semibold',
+    cardTitle: 'text-ink-900', cardSub: 'text-ink-500',
+  },
+  coral: {
+    bg: 'bg-rose-500', text: 'text-rose-600', bgLight: 'bg-rose-50',
+    gradient: 'from-rose-400 to-rose-600', buttonHover: 'hover:bg-rose-600',
+    page: 'bg-[#fff5f5]', heroMask: 'rounded-b-[2.5rem]',
+    logo: 'rounded-[1.5rem] bg-rose-100 text-rose-600',
+    card: 'rounded-[1.5rem] border border-rose-100 bg-white shadow-[0_6px_24px_rgba(244,63,94,0.06)]',
+    tabActive: 'rounded-full bg-rose-500 text-white', tabIdle: 'rounded-full bg-rose-50 text-rose-500',
+    heroOverlay: 'bg-gradient-to-b from-rose-500/15 to-rose-700/40 mix-blend-multiply',
+    sectionGap: 'gap-4', priceFont: 'font-bold',
+    cardTitle: 'text-ink-900', cardSub: 'text-ink-500',
+  },
+  midnight: {
+    bg: 'bg-indigo-900', text: 'text-indigo-300', bgLight: 'bg-indigo-950',
+    gradient: 'from-indigo-700 to-indigo-900', buttonHover: 'hover:bg-indigo-800',
+    page: 'bg-indigo-950', heroMask: 'rounded-b-3xl',
+    logo: 'rounded-2xl bg-indigo-800 text-indigo-200 border border-indigo-700',
+    card: 'rounded-2xl border border-indigo-800 bg-indigo-900/80 shadow-none',
+    tabActive: 'rounded-full bg-indigo-400 text-indigo-950 font-bold', tabIdle: 'rounded-full bg-indigo-800 text-indigo-400',
+    heroOverlay: 'bg-gradient-to-b from-indigo-950/30 to-indigo-950/70',
+    sectionGap: 'gap-4', priceFont: 'font-bold',
+    cardTitle: 'text-indigo-100', cardSub: 'text-indigo-400',
+  },
+  forest: {
+    bg: 'bg-green-800', text: 'text-green-800', bgLight: 'bg-green-50',
+    gradient: 'from-green-600 to-green-800', buttonHover: 'hover:bg-green-900',
+    page: 'bg-[#f0f5f1]', heroMask: 'rounded-b-xl',
+    logo: 'rounded-xl bg-green-100 text-green-800 border border-green-200',
+    card: 'rounded-xl border border-green-100 bg-white shadow-sm',
+    tabActive: 'rounded-lg bg-green-800 text-white', tabIdle: 'rounded-lg bg-green-50 text-green-700',
+    heroOverlay: 'bg-gradient-to-b from-green-800/15 to-green-900/45 mix-blend-multiply',
+    sectionGap: 'gap-3', priceFont: 'font-bold',
+    cardTitle: 'text-ink-900', cardSub: 'text-ink-500',
+  },
+  sand: {
+    bg: 'bg-yellow-700', text: 'text-yellow-800', bgLight: 'bg-yellow-50',
+    gradient: 'from-yellow-600 to-yellow-800', buttonHover: 'hover:bg-yellow-800',
+    page: 'bg-[#fdfaf2]', heroMask: 'rounded-b-2xl',
+    logo: 'rounded-full bg-yellow-100 text-yellow-800 border border-yellow-200',
+    card: 'rounded-2xl border border-yellow-100 bg-white shadow-sm',
+    tabActive: 'rounded-full bg-yellow-700 text-white', tabIdle: 'rounded-full bg-yellow-50 text-yellow-700',
+    heroOverlay: 'bg-gradient-to-b from-yellow-700/15 to-yellow-800/40 mix-blend-multiply',
+    sectionGap: 'gap-4', priceFont: 'font-semibold',
+    cardTitle: 'text-ink-900', cardSub: 'text-ink-500',
   },
 };
 
@@ -225,7 +341,7 @@ export function BeautyPreview({ business, themeColor, designName, onBack }: Beau
 
       {/* Content */}
       <div className="mx-auto max-w-3xl px-4 py-4 sm:px-6">
-        <p className="mb-4 text-sm leading-relaxed text-ink-600">{biz.description}</p>
+        <p className={`mb-4 text-sm leading-relaxed ${s.cardSub}`}>{biz.description}</p>
 
         {/* Tabs */}
         <div className="mb-4 flex gap-1.5 overflow-x-auto scrollbar-hide">
@@ -252,7 +368,7 @@ export function BeautyPreview({ business, themeColor, designName, onBack }: Beau
                     <img src={service.image} alt={service.name} className="h-full w-full object-cover" />
                   </div>
                   <div className="flex flex-1 flex-col min-w-0">
-                    <h3 className="text-sm font-bold text-ink-900">{service.name}</h3>
+                    <h3 className={`text-sm font-bold ${s.cardTitle}`}>{service.name}</h3>
                     <p className="mt-0.5 text-xs text-ink-400">{service.duration}</p>
                     <div className="mt-2 flex items-center justify-between">
                       <span className={`text-base ${s.priceFont} ${s.text}`}>{service.price}</span>
@@ -278,7 +394,7 @@ export function BeautyPreview({ business, themeColor, designName, onBack }: Beau
                     <img src={member.avatar} alt={member.name} className="h-full w-full object-cover" />
                   </div>
                   <div className="p-3">
-                    <h3 className="text-sm font-bold text-ink-900">{member.name}</h3>
+                    <h3 className={`text-sm font-bold ${s.cardTitle}`}>{member.name}</h3>
                     <p className="mt-0.5 text-xs text-ink-400">{member.role}</p>
                     <button
                       onClick={() => { setBookingData({ service: '', specialist: member.name, date: '', time: '' }); setBookingStep(1); setBookingOpen(true); }}
@@ -311,7 +427,7 @@ export function BeautyPreview({ business, themeColor, designName, onBack }: Beau
                       <div className={`flex h-8 w-8 items-center justify-center rounded-full ${s.bgLight} ${s.text} text-xs font-bold`}>
                         {review.name.charAt(0)}
                       </div>
-                      <span className="text-sm font-semibold text-ink-900">{review.name}</span>
+                      <span className={`text-sm font-semibold ${s.cardTitle}`}>{review.name}</span>
                     </div>
                     <div className="flex gap-0.5">
                       {Array.from({ length: review.rating }).map((_, i) => (
@@ -319,7 +435,7 @@ export function BeautyPreview({ business, themeColor, designName, onBack }: Beau
                       ))}
                     </div>
                   </div>
-                  <p className="text-sm leading-relaxed text-ink-600">{review.text}</p>
+                  <p className={`text-sm leading-relaxed ${s.cardSub}`}>{review.text}</p>
                 </div>
               ))}
             </div>
@@ -332,8 +448,8 @@ export function BeautyPreview({ business, themeColor, designName, onBack }: Beau
                   <MapPin className="h-5 w-5" />
                 </div>
                 <div>
-                  <div className="text-sm font-bold text-ink-900">Адрес</div>
-                  <div className="text-sm text-ink-500">{biz.address}</div>
+                  <div className={`text-sm font-bold ${s.cardTitle}`}>Адрес</div>
+                  <div className={`text-sm ${s.cardSub}`}>{biz.address}</div>
                 </div>
               </div>
               <div className={`flex items-center gap-3 p-4 ${s.card}`}>
@@ -341,8 +457,8 @@ export function BeautyPreview({ business, themeColor, designName, onBack }: Beau
                   <Clock className="h-5 w-5" />
                 </div>
                 <div>
-                  <div className="text-sm font-bold text-ink-900">График работы</div>
-                  <div className="text-sm text-ink-500">{biz.hours}</div>
+                  <div className={`text-sm font-bold ${s.cardTitle}`}>График работы</div>
+                  <div className={`text-sm ${s.cardSub}`}>{biz.hours}</div>
                 </div>
               </div>
               <div className={`flex items-center gap-3 p-4 ${s.card}`}>
@@ -350,8 +466,8 @@ export function BeautyPreview({ business, themeColor, designName, onBack }: Beau
                   <Phone className="h-5 w-5" />
                 </div>
                 <div>
-                  <div className="text-sm font-bold text-ink-900">Телефон</div>
-                  <div className="text-sm text-ink-500">{biz.phone}</div>
+                  <div className={`text-sm font-bold ${s.cardTitle}`}>Телефон</div>
+                  <div className={`text-sm ${s.cardSub}`}>{biz.phone}</div>
                 </div>
               </div>
               <div className="flex gap-2">

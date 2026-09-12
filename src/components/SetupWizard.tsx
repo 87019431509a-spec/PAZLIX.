@@ -25,11 +25,21 @@ const spheres = [
 ];
 
 const designs = [
-  { id: 'bloom', name: 'Bloom', color: 'bg-pink-500', desc: 'Мягкий, цветочный', preview: 'rounded-[1.5rem] bg-pink-50 border-pink-200' },
-  { id: 'serenity', name: 'Serenity', color: 'bg-teal-600', desc: 'Минималистичный, спокойный', preview: 'rounded-lg bg-teal-50 border-teal-200' },
-  { id: 'lacquer', name: 'Lacquer', color: 'bg-fuchsia-600', desc: 'Дерзкий, неоновый', preview: 'rounded-none bg-fuchsia-50 border-fuchsia-300' },
-  { id: 'arch', name: 'Arch', color: 'bg-amber-700', desc: 'Чистый, строгий', preview: 'rounded-xl bg-amber-50 border-amber-200' },
-  { id: 'flutter', name: 'Flutter', color: 'bg-violet-600', desc: 'Плавный, нежный', preview: 'rounded-[1.8rem] bg-violet-50 border-violet-200' },
+  { id: 'bloom', name: 'Bloom', color: 'bg-pink-500', desc: 'Мягкий, цветочный' },
+  { id: 'serenity', name: 'Serenity', color: 'bg-teal-600', desc: 'Спокойный, природный' },
+  { id: 'lacquer', name: 'Lacquer', color: 'bg-fuchsia-600', desc: 'Дерзкий, неоновый' },
+  { id: 'arch', name: 'Arch', color: 'bg-amber-700', desc: 'Чистый, строгий' },
+  { id: 'flutter', name: 'Flutter', color: 'bg-violet-600', desc: 'Плавный, нежный' },
+  { id: 'ivory', name: 'Ivory', color: 'bg-stone-800', desc: 'Элегантный, премиум' },
+  { id: 'carbon', name: 'Carbon', color: 'bg-zinc-900', desc: 'Тёмный, мужской' },
+  { id: 'ocean', name: 'Ocean', color: 'bg-blue-600', desc: 'Медицинский, деловой' },
+  { id: 'sage', name: 'Sage', color: 'bg-emerald-700', desc: 'Эко, велнес' },
+  { id: 'copper', name: 'Copper', color: 'bg-orange-700', desc: 'Тёплый, гастро' },
+  { id: 'slate', name: 'Slate', color: 'bg-slate-700', desc: 'Корпоративный' },
+  { id: 'coral', name: 'Coral', color: 'bg-rose-500', desc: 'Творческий, яркий' },
+  { id: 'midnight', name: 'Midnight', color: 'bg-indigo-900', desc: 'Ночной, элитный' },
+  { id: 'forest', name: 'Forest', color: 'bg-green-800', desc: 'Спортивный, сильный' },
+  { id: 'sand', name: 'Sand', color: 'bg-yellow-700', desc: 'Уютный, учебный' },
 ];
 
 const accentColors = [
@@ -313,7 +323,7 @@ export function SetupWizard({ onComplete, onCancel }: WizardProps) {
                   <div className="mb-2 flex items-center gap-1.5 text-xs font-medium text-ink-400">
                     <Eye className="h-3.5 w-3.5" /> Предпросмотр
                   </div>
-                  <div className={`overflow-hidden border-2 ${selectedDesign.preview} p-0`}>
+                  <div className="overflow-hidden rounded-2xl border-2 border-ink-200 dark:border-ink-700 p-0">
                     {/* Mini hero */}
                     <div className={`relative h-28 ${selectedColor.tw}`}>
                       <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/40 to-transparent" />
