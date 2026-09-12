@@ -6,12 +6,27 @@ interface ChatMessage {
   text: string;
 }
 
-const quickReplies = [
-  'Что такое PAZLIX?',
-  'Сколько стоит?',
-  'Как создать сайт?',
-  'Какие сферы поддерживаются?',
-];
+interface AIChatWidgetProps {
+  businessName?: string;
+}
+
+export function AIChatWidget({ businessName }: AIChatWidgetProps) {
+  const isBusinessMode = !!businessName;
+  const botName = isBusinessMode ? businessName : 'PAZLIX';
+
+  const quickReplies = isBusinessMode
+    ? [
+        'Какие услуги есть?',
+        'Сколько стоит?',
+        'Как записаться?',
+        'Где вы находитесь?',
+      ]
+    : [
+        'Что такое PAZLIX?',
+        'Сколько стоит?',
+        'Как создать сайт?',
+        'Какие сферы поддерживаются?',
+      ];
 
 const botResponses: Record<string, string> = {
   'Что такое PAZLIX?': 'PAZLIX — это платформа для создания сайтов-визиток и управления бизнесом. Вы получаете красивую клиентскую страницу и рабочий кабинет: календарь, записи, клиенты, команда — всё в одном месте.',
@@ -20,8 +35,16 @@ const botResponses: Record<string, string> = {
   'Какие сферы поддерживаются?': 'PAZLIX подходит для бьюти-сферы (салоны, массаж, маникюр, брови, ресницы), медицины, фитнеса, автосервиса и других сфер. Каждый дизайн адаптирован под конкретную нишу.',
 };
 
-function generateReply(userText: string): string {
+function generateReply(userText: string, isBiz: boolean, name: string): string {
   const lower = userText.toLowerCase();
+  if (isBiz) {
+    if (lower.includes('услуг') || lower.includes('что дела')) return `В ${name} мы предлагаем полный спектр услуг. Посмотрите вкладку «Услуги» выше — там указаны цены и длительность каждой процедуры.`;
+    if (lower.includes('цен') || lower.includes('стои') || lower.includes('тариф')) return `Актуальные цены на услуги ${name} вы найдёте на вкладке «Услуги». Если нужна индивидуальная консультация — запишитесь онлайн.`;
+    if (lower.includes('запис') || lower.includes('записать')) return 'Нажмите кнопку «Записаться» вверху страницы или выберите услугу и нажмите «Записать». Выберите удобные дату и время, оставьте контакты — готово!';
+    if (lower.includes('где') || lower.includes('адрес') || lower.includes('наход')) return 'Адрес и карту вы найдёте на вкладке «Контакты». Там же график работы, телефон и ссылки на соцсети.';
+    if (lower.includes('привет') || lower.includes('здрав')) return `Здравствуйте! Я консультант ${name}. Помогу с выбором услуги или записью. Спрашивайте!`;
+    return `Хороший вопрос! Напишите нам в мессенджер или позвоните — контакты на вкладке «Контакты». Будем рады помочь!`;
+  }
   if (lower.includes('цен') || lower.includes('стои') || lower.includes('тариф')) return botResponses['Сколько стоит?'];
   if (lower.includes('что') && lower.includes('пазликс')) return botResponses['Что такое PAZLIX?'];
   if (lower.includes('созд') || lower.includes('сайт') || lower.includes('начат')) return botResponses['Как создать сайт?'];
@@ -30,10 +53,12 @@ function generateReply(userText: string): string {
   return 'Отличный вопрос! Вы можете зарегистрироваться и попробовать PAZLIX бесплатно в течение 14 дней. Если не нашли ответ — напишите нам на почту или создайте аккаунт, и всё станет понятно на практике.';
 }
 
-export function AIChatWidget() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
-    { role: 'bot', text: 'Здравствуйте! Я ИИ-консультант PAZLIX. Помогу разобраться с платформой, расскажу про тарифы и функции. Чем могу помочь?' },
+    { role: 'bot', text: isBusinessMode
+      ? `Здравствуйте! Я консультант ${businessName}. Помогу с выбором услуги, расскажу о ценах и помогу записаться.`
+      : 'Здравствуйте! Я ИИ-консультант PAZLIX. Помогу разобраться с платформой, расскажу про тарифы и функции. Чем могу помочь?'
+    },
   ]);
   const [input, setInput] = useState('');
   const [typing, setTyping] = useState(false);
@@ -51,7 +76,7 @@ export function AIChatWidget() {
     setInput('');
     setTyping(true);
     setTimeout(() => {
-      setMessages((prev) => [...prev, { role: 'bot', text: generateReply(text) }]);
+      setMessages((prev) => [...prev, { role: 'bot', text: generateReply(text, isBusinessMode, botName) }]);
       setTyping(false);
     }, 900);
   };
@@ -79,7 +104,7 @@ export function AIChatWidget() {
             <Puzzle className="h-4 w-4" />
           </span>
           <div>
-            <div className="text-sm font-bold text-white">PAZLIX ИИ</div>
+            <div className="text-sm font-bold text-white">{botName} ИИ</div>
             <div className="flex items-center gap-1 text-[10px] text-white/60">
               <span className="h-1.5 w-1.5 rounded-full bg-brand-400" /> Онлайн
             </div>

@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import {
-  Phone, MapPin, Clock, Star, Calendar, MessageSquare, Send,
-  ChevronLeft, Check, X, Monitor, Smartphone,
+  Phone, MapPin, Clock, Star, Calendar, MessageSquare,
+  ChevronLeft, Check, X, Monitor, Smartphone, Heart,
 } from 'lucide-react';
+import { AIChatWidget } from '@/components/AIChatWidget';
 import { DatePicker } from '@/components/DatePicker';
+import { SocialIcon } from '@/components/SocialIcons';
 import type { DemoBusiness } from '@/data';
 
 interface BeautyPreviewProps {
@@ -83,22 +85,36 @@ export function BeautyPreview({ business, themeColor, designName, onBack }: Beau
   const [bookingStep, setBookingStep] = useState(0);
   const [bookingData, setBookingData] = useState({ service: '', specialist: '', date: '', time: '' });
   const [toast, setToast] = useState(false);
+  const [tipsOpen, setTipsOpen] = useState(false);
+  const [tipsAmount, setTipsAmount] = useState<number | null>(null);
+  const [tipsSent, setTipsSent] = useState(false);
+  const [contactsOpen, setContactsOpen] = useState(false);
+
+  const isSolo = biz.team.length <= 1;
 
   const handleSubmit = () => {
     setBookingOpen(false);
     setToast(true);
-    setTimeout(() => setToast(false), 3000);
+    setTimeout(() => {
+      setToast(false);
+      setTimeout(() => setTipsOpen(true), 2000);
+    }, 3000);
   };
 
   const startBooking = (serviceName: string) => {
-    setBookingData({ service: serviceName, specialist: '', date: '', time: '' });
-    setBookingStep(0);
+    if (isSolo) {
+      setBookingData({ service: serviceName, specialist: biz.team[0]?.name || '', date: '', time: '' });
+      setBookingStep(1);
+    } else {
+      setBookingData({ service: serviceName, specialist: '', date: '', time: '' });
+      setBookingStep(0);
+    }
     setBookingOpen(true);
   };
 
   const tabs = [
     { id: 'services' as const, label: 'Услуги' },
-    { id: 'team' as const, label: 'Мастера' },
+    ...(!isSolo ? [{ id: 'team' as const, label: 'Мастера' }] : []),
     { id: 'photos' as const, label: 'Фото' },
     { id: 'reviews' as const, label: 'Отзывы' },
     { id: 'contacts' as const, label: 'Контакты' },
@@ -112,51 +128,100 @@ export function BeautyPreview({ business, themeColor, designName, onBack }: Beau
         <div className={`absolute inset-0 ${s.heroOverlay}`} />
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/50 to-transparent" />
 
-        {/* Phone & social icons — top right */}
-        <div className="absolute right-3 top-3 flex gap-2 sm:right-5 sm:top-5">
-          <a href={`tel:${biz.phone}`} aria-label="Позвонить" className="flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-ink-800 shadow-lg backdrop-blur transition hover:scale-110">
-            <Phone className="h-4 w-4" />
-          </a>
-          {biz.socials.slice(0, 2).map((soc) => (
-            <a key={soc.label} href={soc.url} aria-label={soc.label} className={`flex h-9 w-9 items-center justify-center rounded-full ${s.bg} text-white shadow-lg transition hover:scale-110`}>
-              <Send className="h-4 w-4" />
-            </a>
-          ))}
-        </div>
+
 
         {/* Business name overlaid on hero bottom */}
         <div className="absolute inset-x-0 bottom-0 p-4 sm:p-6">
-          <div className="flex items-end gap-3">
-            <div className={`flex h-14 w-14 flex-none items-center justify-center text-xl font-black shadow-lg sm:h-16 sm:w-16 ${s.logo}`}>
-              {biz.name.charAt(0)}
+          {isSolo ? (
+            <div className="flex flex-col items-center text-center">
+              <img
+                src={biz.team[0]?.avatar || biz.logo}
+                alt={biz.team[0]?.name || biz.name}
+                className="h-20 w-20 rounded-full border-[3px] border-white object-cover shadow-xl sm:h-24 sm:w-24"
+              />
+              <h1 className="mt-2 text-lg font-bold text-white drop-shadow-lg sm:text-2xl">
+                {biz.team[0]?.name || biz.name}
+              </h1>
+              <p className="mt-0.5 text-xs text-white/85 sm:text-sm">
+                {biz.team[0]?.role || biz.tagline}
+              </p>
             </div>
-            <div className="flex-1 pb-1">
-              <h1 className="text-lg font-bold text-white drop-shadow-lg sm:text-2xl">{biz.name}</h1>
-              <p className="mt-0.5 text-xs text-white/85 sm:text-sm">{biz.tagline}</p>
+          ) : (
+            <div className="flex items-end gap-3">
+              <div className={`flex h-14 w-14 flex-none items-center justify-center text-xl font-black shadow-lg sm:h-16 sm:w-16 ${s.logo}`}>
+                {biz.name.charAt(0)}
+              </div>
+              <div className="flex-1 pb-1">
+                <h1 className="text-lg font-bold text-white drop-shadow-lg sm:text-2xl">{biz.name}</h1>
+                <p className="mt-0.5 text-xs text-white/85 sm:text-sm">{biz.tagline}</p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
 
-      {/* Sticky contact bar */}
+      {/* Sticky bar */}
       <div className="sticky top-0 z-20 flex items-center justify-between gap-2 border-b border-ink-100 bg-white/95 px-4 py-2.5 backdrop-blur dark:border-ink-800 dark:bg-ink-900/95">
         <div className="flex items-center gap-1.5 text-xs text-ink-500 dark:text-ink-400">
           <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
           <span className="font-semibold text-ink-700 dark:text-ink-300">4.9</span>
           <span>· {biz.reviews.length} отз.</span>
         </div>
-        <div className="flex gap-1.5">
-          <a href={`tel:${biz.phone}`} className="flex items-center gap-1 rounded-lg bg-ink-100 px-2.5 py-1.5 text-xs font-medium text-ink-700 transition hover:bg-ink-200 dark:bg-ink-800 dark:text-ink-300">
-            <Phone className="h-3 w-3" /> Позвонить
-          </a>
-          <button
-            onClick={() => startBooking('')}
-            className={`flex items-center gap-1 rounded-lg ${s.bg} px-2.5 py-1.5 text-xs font-semibold text-white transition ${s.buttonHover}`}
-          >
-            <Calendar className="h-3 w-3" /> Записаться
-          </button>
-        </div>
+        <button
+          onClick={() => startBooking('')}
+          className={`flex items-center gap-1 rounded-lg ${s.bg} px-2.5 py-1.5 text-xs font-semibold text-white transition ${s.buttonHover}`}
+        >
+          <Calendar className="h-3 w-3" /> Записаться
+        </button>
       </div>
+
+      {/* Floating contacts button */}
+      <button
+        onClick={() => setContactsOpen(true)}
+        className={`fixed bottom-20 left-4 z-30 flex h-12 w-12 items-center justify-center rounded-full ${s.bg} text-white shadow-xl transition hover:scale-110 active:scale-95`}
+      >
+        <MessageSquare className="h-5 w-5" />
+      </button>
+
+      {/* Contacts floating popup */}
+      {contactsOpen && (
+        <div className="fixed inset-0 z-40 flex items-end justify-center sm:items-center" onClick={() => setContactsOpen(false)}>
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+          <div
+            className="relative z-10 w-full max-w-sm rounded-t-3xl bg-white p-5 shadow-2xl dark:bg-ink-900 sm:rounded-3xl sm:m-4 animate-slide-up"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="text-base font-bold text-ink-900 dark:text-white">Связаться</h3>
+              <button onClick={() => setContactsOpen(false)} className="text-ink-400 transition hover:text-ink-600">
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <div className="space-y-2">
+              <a href={`tel:${biz.phone}`} className="flex items-center gap-3 rounded-2xl bg-ink-50 p-3.5 transition hover:bg-ink-100 dark:bg-ink-800 dark:hover:bg-ink-700">
+                <div className={`flex h-10 w-10 flex-none items-center justify-center rounded-xl ${s.bg} text-white`}>
+                  <Phone className="h-5 w-5" />
+                </div>
+                <div>
+                  <div className="text-sm font-semibold text-ink-900 dark:text-white">Позвонить</div>
+                  <div className="text-xs text-ink-400">{biz.phone}</div>
+                </div>
+              </a>
+              {biz.socials.map((soc) => (
+                <a key={soc.label} href={soc.url} className="flex items-center gap-3 rounded-2xl bg-ink-50 p-3.5 transition hover:bg-ink-100 dark:bg-ink-800 dark:hover:bg-ink-700">
+                  <div className={`flex h-10 w-10 flex-none items-center justify-center rounded-xl ${s.bg} text-white`}>
+                    <SocialIcon label={soc.label} className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-ink-900 dark:text-white">{soc.label}</div>
+                    <div className="text-xs text-ink-400">Написать</div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Content */}
       <div className="mx-auto max-w-3xl px-4 py-4 sm:px-6">
@@ -193,10 +258,10 @@ export function BeautyPreview({ business, themeColor, designName, onBack }: Beau
                       <span className={`text-base ${s.priceFont} ${s.text}`}>{service.price}</span>
                       <button
                         onClick={() => startBooking(service.name)}
-                        className={`flex items-center gap-1 rounded-lg ${s.bgLight} px-2.5 py-1.5 text-xs font-semibold ${s.text} transition ${s.bg} hover:text-white`}
+                        className={`flex items-center gap-1 rounded-lg ${s.bg} px-3 py-1.5 text-xs font-semibold text-white transition ${s.buttonHover} shadow-sm`}
                       >
                         <Calendar className="h-3.5 w-3.5" />
-                        Записать
+                        Записаться
                       </button>
                     </div>
                   </div>
@@ -292,7 +357,7 @@ export function BeautyPreview({ business, themeColor, designName, onBack }: Beau
               <div className="flex gap-2">
                 {biz.socials.map((soc) => (
                   <a key={soc.label} href={soc.url} className={`flex flex-1 items-center justify-center gap-1.5 rounded-xl ${s.bg} py-3 text-xs font-semibold text-white transition ${s.buttonHover}`}>
-                    <Send className="h-3.5 w-3.5" />
+                    <SocialIcon label={soc.label} className="h-3.5 w-3.5" />
                     {soc.label}
                   </a>
                 ))}
@@ -368,6 +433,55 @@ export function BeautyPreview({ business, themeColor, designName, onBack }: Beau
               </div>
             )}
 
+            {/* Tips modal — phone frame */}
+            {tipsOpen && (
+              <div className="absolute inset-0 z-40 flex items-end justify-center bg-black/40 backdrop-blur-sm" onClick={() => setTipsOpen(false)}>
+                <div className="w-full rounded-t-3xl bg-white p-5 shadow-2xl dark:bg-ink-900 animate-slide-up" onClick={(e) => e.stopPropagation()}>
+                  {tipsSent ? (
+                    <div className="flex flex-col items-center py-6">
+                      <div className={`mb-3 flex h-14 w-14 items-center justify-center rounded-full ${s.bgLight}`}>
+                        <Heart className={`h-7 w-7 ${s.text}`} />
+                      </div>
+                      <div className="text-base font-bold text-ink-900 dark:text-white">Спасибо за чаевые!</div>
+                      <div className="mt-1 text-sm text-ink-500">{bookingData.specialist || biz.team[0]?.name} будет рад(а)</div>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="mb-1 text-center text-base font-bold text-ink-900 dark:text-white">Оставить чаевые?</div>
+                      <div className="mb-4 text-center text-xs text-ink-500 dark:text-ink-400">
+                        Ваш визит к {bookingData.specialist || biz.team[0]?.name} завершён
+                      </div>
+                      <div className="mb-4 grid grid-cols-4 gap-2">
+                        {[100, 200, 500, 1000].map((amt) => (
+                          <button
+                            key={amt}
+                            onClick={() => setTipsAmount(amt)}
+                            className={`rounded-xl py-3 text-sm font-semibold transition ${
+                              tipsAmount === amt ? `${s.bg} text-white` : 'bg-ink-50 text-ink-700 hover:bg-ink-100 dark:bg-ink-800 dark:text-ink-300'
+                            }`}
+                          >
+                            {amt} ₽
+                          </button>
+                        ))}
+                      </div>
+                      <div className="flex gap-2">
+                        <button onClick={() => setTipsOpen(false)} className="flex-1 rounded-xl bg-ink-100 py-3 text-sm font-medium text-ink-600 transition hover:bg-ink-200 dark:bg-ink-800 dark:text-ink-400">
+                          Не сейчас
+                        </button>
+                        <button
+                          onClick={() => { if (tipsAmount) { setTipsSent(true); setTimeout(() => { setTipsOpen(false); setTipsSent(false); setTipsAmount(null); }, 2000); } }}
+                          disabled={!tipsAmount}
+                          className={`flex-1 rounded-xl py-3 text-sm font-semibold text-white transition ${tipsAmount ? `${s.bg} ${s.buttonHover}` : 'bg-ink-200 text-ink-400 cursor-not-allowed'}`}
+                        >
+                          Отправить
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
+
             {/* Booking modal — top of phone frame */}
             {bookingOpen && (
               <div className="absolute inset-0 z-40 flex items-start justify-center bg-black/40 backdrop-blur-sm" onClick={() => setBookingOpen(false)}>
@@ -406,6 +520,55 @@ export function BeautyPreview({ business, themeColor, designName, onBack }: Beau
               </div>
             )}
 
+            {/* Tips modal — desktop */}
+            {tipsOpen && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm" onClick={() => setTipsOpen(false)}>
+                <div className="w-full max-w-sm rounded-3xl bg-white p-6 shadow-2xl dark:bg-ink-900" onClick={(e) => e.stopPropagation()}>
+                  {tipsSent ? (
+                    <div className="flex flex-col items-center py-6">
+                      <div className={`mb-3 flex h-14 w-14 items-center justify-center rounded-full ${s.bgLight}`}>
+                        <Heart className={`h-7 w-7 ${s.text}`} />
+                      </div>
+                      <div className="text-base font-bold text-ink-900 dark:text-white">Спасибо за чаевые!</div>
+                      <div className="mt-1 text-sm text-ink-500">{bookingData.specialist || biz.team[0]?.name} будет рад(а)</div>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="mb-1 text-center text-base font-bold text-ink-900 dark:text-white">Оставить чаевые?</div>
+                      <div className="mb-4 text-center text-xs text-ink-500 dark:text-ink-400">
+                        Ваш визит к {bookingData.specialist || biz.team[0]?.name} завершён
+                      </div>
+                      <div className="mb-4 grid grid-cols-4 gap-2">
+                        {[100, 200, 500, 1000].map((amt) => (
+                          <button
+                            key={amt}
+                            onClick={() => setTipsAmount(amt)}
+                            className={`rounded-xl py-3 text-sm font-semibold transition ${
+                              tipsAmount === amt ? `${s.bg} text-white` : 'bg-ink-50 text-ink-700 hover:bg-ink-100 dark:bg-ink-800 dark:text-ink-300'
+                            }`}
+                          >
+                            {amt} ₽
+                          </button>
+                        ))}
+                      </div>
+                      <div className="flex gap-2">
+                        <button onClick={() => setTipsOpen(false)} className="flex-1 rounded-xl bg-ink-100 py-3 text-sm font-medium text-ink-600 transition hover:bg-ink-200 dark:bg-ink-800 dark:text-ink-400">
+                          Не сейчас
+                        </button>
+                        <button
+                          onClick={() => { if (tipsAmount) { setTipsSent(true); setTimeout(() => { setTipsOpen(false); setTipsSent(false); setTipsAmount(null); }, 2000); } }}
+                          disabled={!tipsAmount}
+                          className={`flex-1 rounded-xl py-3 text-sm font-semibold text-white transition ${tipsAmount ? `${s.bg} ${s.buttonHover}` : 'bg-ink-200 text-ink-400 cursor-not-allowed'}`}
+                        >
+                          Отправить
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
+
             {/* Booking modal — desktop centered */}
             {bookingOpen && (
               <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm" onClick={() => setBookingOpen(false)}>
@@ -426,6 +589,7 @@ export function BeautyPreview({ business, themeColor, designName, onBack }: Beau
           </div>
         )}
       </div>
+      <AIChatWidget businessName={biz.name} />
     </div>
   );
 }

@@ -41,14 +41,14 @@ export function Pricing({ onAuthClick }: PricingProps) {
               )}
 
               <div className="mb-5 flex items-center gap-2">
-                <Users className={`h-5 w-5 ${tier.highlight ? 'text-brand-400' : 'text-brand-500'}`} />
-                <span className={`text-sm font-medium ${tier.highlight ? 'text-ink-300' : 'text-ink-500'}`}>
+                <Users className={`h-5 w-5 ${tier.highlight ? 'text-brand-400 dark:text-brand-600' : 'text-brand-500'}`} />
+                <span className={`text-sm font-medium ${tier.highlight ? 'text-ink-300 dark:text-ink-500' : 'text-ink-500 dark:text-ink-400'}`}>
                   {tier.staff}
                 </span>
               </div>
 
               <div className="mb-6">
-                <span className={`text-4xl font-extrabold ${tier.highlight ? 'text-white' : 'text-ink-950 dark:text-white'}`}>
+                <span className={`text-4xl font-extrabold ${tier.highlight ? 'text-white dark:text-ink-950' : 'text-ink-950 dark:text-white'}`}>
                   {tier.price}
                 </span>
                 <span className={`text-sm ${tier.highlight ? 'text-ink-400 dark:text-ink-500' : 'text-ink-400 dark:text-ink-500'}`}>
@@ -60,11 +60,11 @@ export function Pricing({ onAuthClick }: PricingProps) {
                 {tier.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-3">
                     <span className={`mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full ${
-                      tier.highlight ? 'bg-brand-500/20 text-brand-400' : 'bg-brand-500/10 text-brand-600'
+                      tier.highlight ? 'bg-brand-500/20 text-brand-400 dark:bg-brand-500/10 dark:text-brand-600' : 'bg-brand-500/10 text-brand-600'
                     }`}>
                       <Check className="h-3.5 w-3.5" />
                     </span>
-                    <span className={`text-sm ${tier.highlight ? 'text-ink-200' : 'text-ink-700'}`}>
+                    <span className={`text-sm ${tier.highlight ? 'text-ink-200 dark:text-ink-600' : 'text-ink-700 dark:text-ink-300'}`}>
                       {feature}
                     </span>
                   </li>
@@ -75,7 +75,7 @@ export function Pricing({ onAuthClick }: PricingProps) {
                 onClick={onAuthClick}
                 className={`mt-7 w-full rounded-full py-3 text-sm font-semibold transition-all duration-300 ${
                   tier.highlight
-                    ? 'bg-brand-500 text-white hover:bg-brand-600 hover:shadow-xl hover:shadow-brand-500/30'
+                    ? 'bg-brand-500 text-white hover:bg-brand-600 hover:shadow-xl hover:shadow-brand-500/30 dark:bg-brand-500 dark:text-white dark:hover:bg-brand-600'
                     : 'bg-ink-900 text-white hover:bg-ink-800 dark:bg-white dark:text-ink-900 dark:hover:bg-ink-100'
                 }`}
               >
